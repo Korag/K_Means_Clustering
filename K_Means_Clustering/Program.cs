@@ -10,6 +10,9 @@ namespace K_Means_Clustering
     {
         static void Main(string[] args)
         {
+
+
+            Console.ReadLine();
         }
     }
 }
