@@ -74,6 +74,153 @@ namespace K_Means_Clustering
             return cluster;
         }
 
+
+        public static double[][] Allocate(int quantityOfClusters, int quantityOfColumnsData)
+        {
+            double[][] allocateMatrix = new double[quantityOfClusters][];
+            for (int i = 0; i < quantityOfClusters; i++)
+            {
+                allocateMatrix[i] = new double[quantityOfColumnsData];
+            }
+            return allocateMatrix;
+        }
+
+        public static bool UpdateMeans(double[][] NormalizedData, int[] cluster, ref double[][] means, int quantityOfClusters)
+        {
+            int[] quantityOfSingleDataInSingleCluster = new int[quantityOfClusters];
+            for (int i = 0; i < NormalizedData.Length; i++)
+            {
+                int IndexOfCluster = cluster[i];
+                quantityOfSingleDataInSingleCluster[IndexOfCluster]++;
+            }
+
+            for (int i = 0; i < quantityOfClusters; i++)
+            {
+                if (quantityOfSingleDataInSingleCluster[i]==0)
+                {
+                    // one of cluster is empty
+                    return false;
+                }
+            }
+
+            // update the means
+            for (int i = 0; i < means.Length; i++)
+            {
+                for (int j = 0; j < means[i].Length; j++)
+                {
+                    means[i][j] = 0.00;
+                }
+            }
+
+            for (int i = 0; i < NormalizedData.Length; i++)
+            {
+                int IndexOfCluster = cluster[i];
+                for (int j = 0; j < NormalizedData[i].Length; j++)
+                {
+                    // sum SingleData belongs to each cluster
+                    means[IndexOfCluster][j] += NormalizedData[i][j];
+                }
+            }
+
+            for (int i = 0; i < means.Length; i++)
+            {
+                for (int j = 0; j < means[i].Length; j++)
+                {
+                    means[i][j] /= quantityOfSingleDataInSingleCluster[i];
+                }
+            }
+            return true;
+        }
+
+
+        public static bool UpdateClustering(double[][] NormalizedData, int[] cluster, double[][] means, int quantityOfClusters)
+        {
+            bool changed = false;
+            int[] newCluster = new int[cluster.Length];
+
+            for (int i = 0; i < cluster.Length; i++)
+            {
+                newCluster[i] = cluster[i];
+            }
+
+            // distance from vectorOfRow to mean 
+            double[] distances = new double[quantityOfClusters];
+
+            for (int i = 0; i < NormalizedData.Length; i++)
+            {
+                for (int j = 0; j < quantityOfClusters; j++)
+                {
+                    distances[j] = Distance(NormalizedData[i], means[j]);
+                }
+
+                int newClusterID = IndexOfMinValue(distances);
+                // update assigns clusters
+                if (newClusterID != newCluster[i])
+                {
+                    changed = true;
+                    newCluster[i] = newClusterID;
+                }
+            }
+
+            if (changed == false)
+            {
+                return false;
+            }
+
+            // check new assign
+            int[] quantityOfSingleDataInSingleCluster = new int[quantityOfClusters];
+
+            for (int i = 0; i < NormalizedData.Length; i++)
+            {
+                int IndexOfCluster = newCluster[i];
+                quantityOfSingleDataInSingleCluster[IndexOfCluster]++;
+            }
+
+            for (int i = 0; i < quantityOfClusters; i++)
+            {
+                if (quantityOfSingleDataInSingleCluster[i] == 0)
+                {
+                    // cluster is empty
+                    return false;
+                }
+            }
+
+            // update original cluster[]
+            for (int i = 0; i < newCluster.Length; i++)
+            {
+                cluster[i] = newCluster[i];
+            }
+
+            // at least one change in assing SingleData to clusters and NO empty clusters
+            return true;
+        }
+
+        public static double Distance(double[] vectorOfSingleRow, double[] mean)
+        {
+            double sumSquaredDifferencials = 0.00;
+            for (int i = 0; i < vectorOfSingleRow.Length; i++)
+            {
+                sumSquaredDifferencials += Math.Pow((vectorOfSingleRow[i] - mean[i]), 2);
+            }
+            return Math.Sqrt(sumSquaredDifferencials);
+        }
+
+        public static int IndexOfMinValue(double[] distances)
+        {
+            // index of the smallest value in array
+            int IndexOfMin = 0;
+            double smallDistance = distances[0];
+            for (int i = 0; i < distances.Length; i++)
+            {
+                if (distances[i] < smallDistance)
+                {
+                    smallDistance = distances[i];
+                    IndexOfMin = i;
+                }
+            }
+            return IndexOfMin;
+        }
+
         // Core of the clustering algorithm
         public static int[] EnableClustering(double[][] DataSet, int quantityOfClusters)
         {
@@ -90,8 +237,8 @@ namespace K_Means_Clustering
             while (change_in_claster_occur == true && succes_mean_compute == true && iterator < maxIterationLimit)
             {
                 iterator++;
-                succes_mean_compute = UpdateMeans(NormalizedData, cluster, means);
-                change_in_claster_occur = UpdateClustering(NormalizedData, cluster, means);
+                succes_mean_compute = UpdateMeans(NormalizedData, cluster, ref means, quantityOfClusters);
+                change_in_claster_occur = UpdateClustering(NormalizedData, cluster, means, quantityOfClusters);
 
             }
 
