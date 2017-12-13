@@ -10,13 +10,14 @@ namespace K_Means_Clustering
     {
         public static int quantityOfClusters;
        
-
+        // How many clusters?
         public static void SetQuantity()
         {
             Console.WriteLine("How many Clusters: ");
             quantityOfClusters = Convert.ToInt32(Console.ReadLine());
         }
 
+        // Normalized dataset
         public static double[][] ConvertToNormalize(double[][] DataSet)
         {
             double[][] copyData = new double[DataSet.Length][];
@@ -242,6 +243,7 @@ namespace K_Means_Clustering
 
             }
 
+          
             return cluster;
         }
     }

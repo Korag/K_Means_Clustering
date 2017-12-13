@@ -47,5 +47,26 @@ namespace K_Means_Clustering
                 Console.WriteLine("");
             }
         }
+
+        public static void ShowClustered(double[][] DataSet, int[] cluster, int quantityOfClusters)
+        {
+            for (int k = 0; k < quantityOfClusters; k++)
+            {
+                Console.WriteLine("===================");
+                for (int i = 0; i < DataSet.Length; i++)
+                {
+                    int clusterID = cluster[i];
+                    if (clusterID != k) continue;
+                    Console.Write(i.ToString().PadLeft(3) + " ");
+                    for (int j = 0; j < DataSet[i].Length; ++j)
+                    {
+                        if (DataSet[i][j] >= 0.0) Console.Write(" ");
+                        Console.Write(DataSet[i][j].ToString("F" + 1) + " ");
+                    }
+                    Console.WriteLine("");
+                }
+                Console.WriteLine("===================");
+            } 
+        }
     }
 }
