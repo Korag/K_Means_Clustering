@@ -18,7 +18,7 @@ namespace K_Means_Clustering
         }
 
         // Normalized dataset
-        public static double[][] ConvertToNormalize(double[][] DataSet)
+        private static double[][] ConvertToNormalize(double[][] DataSet)
         {
             double[][] copyData = new double[DataSet.Length][];
             for (int i = 0; i < DataSet.Length; i++)
@@ -59,7 +59,7 @@ namespace K_Means_Clustering
         }
 
         // First clusters assign
-        public static int[] Initialize(int quantityOfSingleData, int quantityOfClusters)
+        private static int[] Initialize(int quantityOfSingleData, int quantityOfClusters)
         {
             Random R = new Random();
             int[] cluster = new int[quantityOfSingleData];
@@ -76,7 +76,7 @@ namespace K_Means_Clustering
         }
 
 
-        public static double[][] Allocate(int quantityOfClusters, int quantityOfColumnsData)
+        private static double[][] Allocate(int quantityOfClusters, int quantityOfColumnsData)
         {
             double[][] allocateMatrix = new double[quantityOfClusters][];
             for (int i = 0; i < quantityOfClusters; i++)
@@ -86,7 +86,7 @@ namespace K_Means_Clustering
             return allocateMatrix;
         }
 
-        public static bool UpdateMeans(double[][] NormalizedData, int[] cluster, ref double[][] means, int quantityOfClusters)
+        private static bool UpdateMeans(double[][] NormalizedData, int[] cluster, ref double[][] means, int quantityOfClusters)
         {
             int[] quantityOfSingleDataInSingleCluster = new int[quantityOfClusters];
             for (int i = 0; i < NormalizedData.Length; i++)
@@ -134,7 +134,7 @@ namespace K_Means_Clustering
         }
 
 
-        public static bool UpdateClustering(double[][] NormalizedData, int[] cluster, double[][] means, int quantityOfClusters)
+        private static bool UpdateClustering(double[][] NormalizedData, int[] cluster, double[][] means, int quantityOfClusters)
         {
             bool changed = false;
             int[] newCluster = new int[cluster.Length];
@@ -196,7 +196,7 @@ namespace K_Means_Clustering
             return true;
         }
 
-        public static double Distance(double[] vectorOfSingleRow, double[] mean)
+        private static double Distance(double[] vectorOfSingleRow, double[] mean)
         {
             double sumSquaredDifferencials = 0.00;
             for (int i = 0; i < vectorOfSingleRow.Length; i++)
@@ -206,7 +206,7 @@ namespace K_Means_Clustering
             return Math.Sqrt(sumSquaredDifferencials);
         }
 
-        public static int IndexOfMinValue(double[] distances)
+        private static int IndexOfMinValue(double[] distances)
         {
             // index of the smallest value in array
             int IndexOfMin = 0;

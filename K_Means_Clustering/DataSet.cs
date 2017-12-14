@@ -52,7 +52,8 @@ namespace K_Means_Clustering
         {
             for (int k = 0; k < quantityOfClusters; k++)
             {
-                Console.WriteLine("===================");
+                Console.WriteLine("-----------"+k+"-----------");
+                Console.WriteLine("========================");
                 for (int i = 0; i < DataSet.Length; i++)
                 {
                     int clusterID = cluster[i];
@@ -65,8 +66,52 @@ namespace K_Means_Clustering
                     }
                     Console.WriteLine("");
                 }
-                Console.WriteLine("===================");
+                Console.WriteLine("========================");
             } 
+        }
+
+        public static void SaveClusteredToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        {
+            using (StreamWriter sw = new StreamWriter(Path))
+            {
+                for (int k = 0; k < quantityOfClusters; k++)
+                {
+                    sw.WriteLine("-----------" + k + "-----------");
+                    sw.WriteLine("========================");
+                    for (int i = 0; i < DataSet.Length; i++)
+                    {
+                        int clusterID = cluster[i];
+                        if (clusterID != k) continue;
+                        sw.Write(i.ToString().PadLeft(3) + " ");
+                        for (int j = 0; j < DataSet[i].Length; ++j)
+                        {
+                            if (DataSet[i][j] >= 0.0) sw.Write(" ");
+                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+                        }
+                        sw.WriteLine("");
+                    }
+                    sw.WriteLine("========================");
+                }
+            }
+        }
+
+        public static void ShowVector(int[] Vector)
+        {
+            for (int i = 0; i < Vector.Length; i++)
+            {
+                Console.Write(Vector[i] + " ");
+            }
+        }
+
+        public static void SaveVectorToFile(int[] Vector, string Path)
+        {
+            using (StreamWriter sw = new StreamWriter(Path))
+            {
+                for (int i = 0; i < Vector.Length; i++)
+                {
+                    sw.WriteLine("index: " + i + "\t cluster: " + Vector[i] + " ");
+                }
+            }
         }
     }
 }
