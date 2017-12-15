@@ -23,7 +23,7 @@ namespace K_Means_Clustering
             sw.Start();
             int[] cluster = Clustering.EnableClustering(Iris, Clustering.quantityOfClusters);
             sw.Stop();
-
+            //ss
             DataSet.ShowVector(cluster);
             DataSet.SaveVectorToFile(cluster, @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_vector.txt");
            
