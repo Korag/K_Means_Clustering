@@ -9,13 +9,17 @@ namespace K_Means_Clustering
     abstract class Clustering
     {
         public static int quantityOfClusters;
-       
+        public static int ClustersMade;
+
+
         // How many clusters?
         public static void SetQuantity()
         {
             Console.WriteLine("How many Clusters: ");
             quantityOfClusters = Convert.ToInt32(Console.ReadLine());
         }
+
+       
 
         // Normalized dataset
         private static double[][] ConvertToNormalize(double[][] DataSet)

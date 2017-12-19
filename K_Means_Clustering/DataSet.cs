@@ -10,6 +10,8 @@ namespace K_Means_Clustering
 {
     class DataSet
     {
+        private static int t = 0;
+
         public static double[][] GetDataSet(string path)
         {
             double[][] DataSet;
@@ -24,6 +26,32 @@ namespace K_Means_Clustering
                     for (int j = 0; j < s2.Length; j++)
                     {
                         DataSet[i][j] = Double.Parse(s2[j], CultureInfo.InvariantCulture);
+                    }
+                }
+                return DataSet;
+            }
+
+            catch
+            {
+
+            }
+            return null;
+        }
+
+        public static double[][] GetDataSet_ (string path)
+        {
+            double[][] DataSet;
+            try
+            {
+                string[] s1 = File.ReadAllLines(path);
+                DataSet = new double[s1.Length][];
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    string[] s2 = s1[i].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    DataSet[i] = new double[s2.Length];
+                    for (int j = 0; j < s2.Length; j++)
+                    {
+                        DataSet[i][j] = Double.Parse(s2[j]);
                     }
                 }
                 return DataSet;
@@ -83,7 +111,7 @@ namespace K_Means_Clustering
                         int clusterID = cluster[i];
                         if (clusterID != k) continue;
                         sw.Write(i.ToString().PadLeft(3) + " ");
-                        for (int j = 0; j < DataSet[i].Length; ++j)
+                        for (int j = 0; j < DataSet[i].Length; j++)
                         {
                             if (DataSet[i][j] >= 0.0) sw.Write(" ");
                             sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
@@ -93,6 +121,70 @@ namespace K_Means_Clustering
                     sw.WriteLine("========================");
                 }
             }
+        }
+
+        public static void SaveEachClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        {
+            for (int k = 0; k < quantityOfClusters; k++)
+            {
+                using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
+                {
+              
+                    for (int i = 0; i < DataSet.Length; i++)
+                    {
+                        int clusterID = cluster[i];
+                        if (clusterID != k) continue;
+                       
+                        for (int j = 0; j < DataSet[i].Length; j++)
+                        {
+                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+                        }
+                        sw.WriteLine("");
+                    }
+                }
+                t++;
+            }
+        }
+
+        public static void SaveOneClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        {
+            for (int k = 0; k < quantityOfClusters; k++)
+            {
+                using (StreamWriter sw = new StreamWriter(Path))
+                {
+
+                    for (int i = 0; i < DataSet.Length; i++)
+                    {
+                        int clusterID = cluster[i];
+                        if (clusterID != k) continue;
+
+                        for (int j = 0; j < DataSet[i].Length; j++)
+                        {
+                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+                        }
+                        sw.WriteLine("");
+                    }
+                }
+            }
+        }
+
+        public static double[][][] AddToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters, int ClustersMade)
+        {
+            double[][][] Matrix = new double[100][][];
+            for (int k = ClustersMade; k < ClustersMade+quantityOfClusters; k++)
+            {
+                    for (int i = 0; i < DataSet.Length; i++)
+                    {
+                        int clusterID = cluster[i];
+                        if (clusterID != k) continue;
+
+                        for (int j = 0; j < DataSet[i].Length; j++)
+                        {
+                        Matrix[k][i][j] = DataSet[i][j];
+                        }
+                    }
+            }
+            return Matrix;
         }
 
         public static void ShowVector(int[] Vector)
