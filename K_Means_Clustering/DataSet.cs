@@ -151,7 +151,7 @@ namespace K_Means_Clustering
         {
             for (int k = 0; k < quantityOfClusters; k++)
             {
-                using (StreamWriter sw = new StreamWriter(Path))
+                using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
                 {
 
                     for (int i = 0; i < DataSet.Length; i++)
@@ -166,6 +166,7 @@ namespace K_Means_Clustering
                         sw.WriteLine("");
                     }
                 }
+                t++;
             }
         }
 

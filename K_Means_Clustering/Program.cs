@@ -14,7 +14,7 @@ namespace K_Means_Clustering
             Stopwatch sw = new Stopwatch();
 
       
-            double[][] Iris = DataSet.GetDataSet(@"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris.txt");
+            double[][] Iris = DataSet.GetDataSet(@"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris.txt");
             DataSet.ShowDataSet(Iris);
 
             Console.WriteLine();
@@ -36,16 +36,16 @@ namespace K_Means_Clustering
 
             
             DataSet.ShowVector(cluster);
-            DataSet.SaveVectorToFile(cluster, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_vector.txt");
+            DataSet.SaveVectorToFile(cluster, @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_vector.txt");
            
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Data in cluster:");
 
             DataSet.ShowClustered(Iris, cluster, Clustering.quantityOfClusters);
-            DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_clustered.txt");
+            DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_clustered.txt");
 
-            DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+            DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
 
            
 
@@ -72,10 +72,10 @@ namespace K_Means_Clustering
                     for (int j = 0; j < Clustering.quantityOfClusters; j++)
                     {
                         Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(Matrix[p], clusterHelper, Clustering.quantityOfClusters);
+                       // DataSet.SaveOneClusterToFile(Matrix[Clustering.ClustersMade], clusterHelper, Clustering.quantityOfClusters, @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
                         Clustering.ClustersMade++;
                     }
                     DataSet.numerator = 0;
-                    //DataSet.SaveEachClusterToFile(Matrix[Clustering.ClustersMade], cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
                     p++;
                 }
             }
