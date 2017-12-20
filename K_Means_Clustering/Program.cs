@@ -13,6 +13,7 @@ namespace K_Means_Clustering
         {
             Stopwatch sw = new Stopwatch();
 
+      
             double[][] Iris = DataSet.GetDataSet(@"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris.txt");
             DataSet.ShowDataSet(Iris);
 
@@ -21,11 +22,16 @@ namespace K_Means_Clustering
             Console.WriteLine();
 
             double[][][] Matrix = new double[100][][];
+            
 
             sw.Start();
             int[] cluster = Clustering.EnableClustering(Iris, Clustering.quantityOfClusters);
-            Matrix = DataSet.AddToMatrix(Iris, cluster, Clustering.quantityOfClusters, Clustering.ClustersMade);
-            Clustering.ClustersMade += Clustering.quantityOfClusters;
+            for (int i = 0; i < Clustering.quantityOfClusters; i++)
+            {
+                Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(Iris, cluster, Clustering.quantityOfClusters);
+                Clustering.ClustersMade++;
+            }
+            DataSet.numerator = 0;
             sw.Stop();
 
             
@@ -40,6 +46,10 @@ namespace K_Means_Clustering
             DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_clustered.txt");
 
             DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+
+           
+
+
 
 
             Console.WriteLine("How many more iterations: ");
@@ -59,9 +69,13 @@ namespace K_Means_Clustering
                 for (int i = 0; i < HigherLevelQuantity; i++)
                 {
                     int[] clusterHelper = Clustering.EnableClustering(Matrix[p], Clustering.quantityOfClusters);
-                    Matrix = DataSet.AddToMatrix(Matrix[Clustering.ClustersMade], cluster, Clustering.quantityOfClusters, Clustering.ClustersMade);
-                    DataSet.SaveEachClusterToFile(Matrix[Clustering.ClustersMade], cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
-                    Clustering.ClustersMade += Clustering.quantityOfClusters;
+                    for (int j = 0; j < Clustering.quantityOfClusters; j++)
+                    {
+                        Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(Matrix[p], clusterHelper, Clustering.quantityOfClusters);
+                        Clustering.ClustersMade++;
+                    }
+                    DataSet.numerator = 0;
+                    //DataSet.SaveEachClusterToFile(Matrix[Clustering.ClustersMade], cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
                     p++;
                 }
             }
@@ -69,29 +83,6 @@ namespace K_Means_Clustering
 
 
 
-
-            //Console.WriteLine("How many more iterations: ");
-            //int sumOfFiles = 0;
-            //int Level1Quantity = Clustering.quantityOfClusters;
-            //int s = Convert.ToInt32(Console.ReadLine());
-            //s += Clustering.quantityOfClusters;
-            //int m = 0;
-            //for (int k = Level1Quantity; k < s; k++)
-            //{
-            //    int quantityOfLevel = Clustering.quantityOfClusters;
-            //    double[][][] ClustersSubData = new double[30][][];
-            //    Clustering.SetQuantity();
-            //    for (int i = m; i < m + quantityOfLevel; i++)
-            //    {
-
-            //        ClustersSubData[i] = DataSet.GetDataSet_($@"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster{i}.txt");
-
-            //        int[] cluster2Level = Clustering.EnableClustering(ClustersSubData[i], Clustering.quantityOfClusters);
-            //        DataSet.SaveEachClusterToFile(ClustersSubData[i], cluster2Level, Clustering.quantityOfClusters, $@"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster{k}");
-
-            //    }
-            //    m += quantityOfLevel;
-            //}
 
 
 

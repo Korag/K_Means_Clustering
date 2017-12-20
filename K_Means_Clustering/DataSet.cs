@@ -11,6 +11,7 @@ namespace K_Means_Clustering
     class DataSet
     {
         private static int t = 0;
+        public static int numerator = 0;
 
         public static double[][] GetDataSet(string path)
         {
@@ -175,15 +176,40 @@ namespace K_Means_Clustering
             {
                     for (int i = 0; i < DataSet.Length; i++)
                     {
+                        Matrix[k] = new double[DataSet.Length][];
+
                         int clusterID = cluster[i];
                         if (clusterID != k) continue;
 
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
+                        Matrix[k][i] = new double[DataSet[i].Length];
                         Matrix[k][i][j] = DataSet[i][j];
                         }
                     }
             }
+            return Matrix;
+        }
+
+        public static double[][] AddOneClusterToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters)
+        {
+            double[][] Matrix = new double[DataSet.Length][];
+
+                for (int i = 0; i < DataSet.Length; i++)
+                {
+                Matrix[i] = new double[DataSet[i].Length];
+
+                    int clusterID = cluster[i];
+                    if (clusterID != numerator) continue;
+
+                    for (int j = 0; j < DataSet[i].Length; j++)
+                    {
+                       
+                        Matrix[i][j] = DataSet[i][j];
+                    }
+                }
+
+            numerator++;
             return Matrix;
         }
 
