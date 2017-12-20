@@ -135,9 +135,14 @@ namespace K_Means_Clustering
                     {
                         int clusterID = cluster[i];
                         if (clusterID != k) continue;
+
                        
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
+                            if (DataSet[i][j] == 0)
+                            {
+                                break;
+                            }
                             sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
                         }
                         sw.WriteLine("");
@@ -147,28 +152,28 @@ namespace K_Means_Clustering
             }
         }
 
-        public static void SaveOneClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
-        {
-            for (int k = 0; k < quantityOfClusters; k++)
-            {
-                using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
-                {
+        //public static void SaveOneClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        //{
+        //    for (int k = 0; k < quantityOfClusters; k++)
+        //    {
+        //        using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
+        //        {
 
-                    for (int i = 0; i < DataSet.Length; i++)
-                    {
-                        int clusterID = cluster[i];
-                        if (clusterID != k) continue;
+        //            for (int i = 0; i < DataSet.Length; i++)
+        //            {
+        //                int clusterID = cluster[i];
+        //                if (clusterID != k) continue;
 
-                        for (int j = 0; j < DataSet[i].Length; j++)
-                        {
-                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
-                        }
-                        sw.WriteLine("");
-                    }
-                }
-                t++;
-            }
-        }
+        //                for (int j = 0; j < DataSet[i].Length; j++)
+        //                {
+        //                    sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+        //                }
+        //                sw.WriteLine("");
+        //            }
+        //        }
+        //        t++;
+        //    }
+        //}
 
         public static double[][][] AddToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters, int ClustersMade)
         {

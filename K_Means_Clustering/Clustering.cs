@@ -19,6 +19,51 @@ namespace K_Means_Clustering
             quantityOfClusters = Convert.ToInt32(Console.ReadLine());
         }
 
+        // Creating top level of clusters
+        public static void FirstIteration(double[][] BaseMatrix, double[][][] Matrix, int[] cluster)
+        {
+            for (int i = 0; i < Clustering.quantityOfClusters; i++)
+            {
+                Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(BaseMatrix, cluster, Clustering.quantityOfClusters);
+                Clustering.ClustersMade++;
+            }
+            DataSet.numerator = 0;
+        }
+
+        // Loop for nested clusters
+        public static void LoopIteration(double[][] BaseMatrix, double[][][] Matrix, int iterationsNumber, string Path)
+        {
+            // pomocnicze iteratory
+            int p = 0;
+            // ilosc ostatnio stworzonych klastrow jako ograniczenie w petli, a poczatek matrix petla z parametru ClustersMade
+            int ClusterMark = 0;
+            int HigherLevelQuantity = Clustering.quantityOfClusters;
+            for (int k = 0; k < iterationsNumber; k++)
+            {
+                int ClustersInIteration = 0;
+                Clustering.SetQuantity();
+                ClusterMark = Clustering.ClustersMade;
+
+
+                for (int i = 0; i < HigherLevelQuantity; i++)
+                {
+                    // rozwazyc usuniecie clusterHelper
+                    int[] clusterHelper = Clustering.EnableClustering(Matrix[p], Clustering.quantityOfClusters);
+                    for (int j = 0; j < Clustering.quantityOfClusters; j++)
+                    {
+                        Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(Matrix[p], clusterHelper, Clustering.quantityOfClusters);
+                        //DataSet.SaveOneClusterToFile(Matrix[Clustering.ClustersMade], clusterHelper, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+                        Clustering.ClustersMade++;
+                        ClustersInIteration++;
+                    }
+                    DataSet.SaveEachClusterToFile(Matrix[p], clusterHelper, Clustering.quantityOfClusters, Path);
+                    DataSet.numerator = 0;
+                    p++;
+                }
+                HigherLevelQuantity = ClustersInIteration;
+            }
+
+        }
        
 
         // Normalized dataset
