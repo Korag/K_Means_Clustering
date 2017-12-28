@@ -54,7 +54,11 @@ namespace K_Means_Clustering
 
             sw2.Stop();
 
-
+            Console.WriteLine("Generate Graph from which dimensions: ");
+            Console.WriteLine("Choose 2 integers from 0 to " + (Iris[0].Length-1));
+            int dimension1 = Convert.ToInt32(Console.ReadLine());
+            int dimension2 = Convert.ToInt32(Console.ReadLine());
+            Drawing.DrawClusterGraph(Iris, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\graph", 3000, 3000, dimension1 , dimension2);
 
             Console.WriteLine("End of the process ");
             Console.WriteLine("1 iteration at time: " + sw.Elapsed);

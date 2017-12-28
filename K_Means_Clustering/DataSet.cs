@@ -39,7 +39,7 @@ namespace K_Means_Clustering
             return null;
         }
 
-        public static double[][] GetDataSet_ (string path)
+        public static double[][] GetDataSet_(string path)
         {
             double[][] DataSet;
             try
@@ -81,7 +81,7 @@ namespace K_Means_Clustering
         {
             for (int k = 0; k < quantityOfClusters; k++)
             {
-                Console.WriteLine("-----------"+k+"-----------");
+                Console.WriteLine("-----------" + k + "-----------");
                 Console.WriteLine("========================");
                 for (int i = 0; i < DataSet.Length; i++)
                 {
@@ -96,7 +96,7 @@ namespace K_Means_Clustering
                     Console.WriteLine("");
                 }
                 Console.WriteLine("========================");
-            } 
+            }
         }
 
         public static void SaveClusteredToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
@@ -130,13 +130,13 @@ namespace K_Means_Clustering
             {
                 using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
                 {
-              
+
                     for (int i = 0; i < DataSet.Length; i++)
                     {
                         int clusterID = cluster[i];
                         if (clusterID != k) continue;
 
-                       
+
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
                             if (DataSet[i][j] == 0)
@@ -178,21 +178,21 @@ namespace K_Means_Clustering
         public static double[][][] AddToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters, int ClustersMade)
         {
             double[][][] Matrix = new double[100][][];
-            for (int k = ClustersMade; k < ClustersMade+quantityOfClusters; k++)
+            for (int k = ClustersMade; k < ClustersMade + quantityOfClusters; k++)
             {
-                    for (int i = 0; i < DataSet.Length; i++)
+                for (int i = 0; i < DataSet.Length; i++)
+                {
+                    Matrix[k] = new double[DataSet.Length][];
+
+                    int clusterID = cluster[i];
+                    if (clusterID != k) continue;
+
+                    for (int j = 0; j < DataSet[i].Length; j++)
                     {
-                        Matrix[k] = new double[DataSet.Length][];
-
-                        int clusterID = cluster[i];
-                        if (clusterID != k) continue;
-
-                        for (int j = 0; j < DataSet[i].Length; j++)
-                        {
                         Matrix[k][i] = new double[DataSet[i].Length];
                         Matrix[k][i][j] = DataSet[i][j];
-                        }
                     }
+                }
             }
             return Matrix;
         }
@@ -201,19 +201,19 @@ namespace K_Means_Clustering
         {
             double[][] Matrix = new double[DataSet.Length][];
 
-                for (int i = 0; i < DataSet.Length; i++)
-                {
+            for (int i = 0; i < DataSet.Length; i++)
+            {
                 Matrix[i] = new double[DataSet[i].Length];
 
-                    int clusterID = cluster[i];
-                    if (clusterID != numerator) continue;
+                int clusterID = cluster[i];
+                if (clusterID != numerator) continue;
 
-                    for (int j = 0; j < DataSet[i].Length; j++)
-                    {
-                       
-                        Matrix[i][j] = DataSet[i][j];
-                    }
+                for (int j = 0; j < DataSet[i].Length; j++)
+                {
+
+                    Matrix[i][j] = DataSet[i][j];
                 }
+            }
 
             numerator++;
             return Matrix;
