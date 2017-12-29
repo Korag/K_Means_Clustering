@@ -28,7 +28,7 @@ namespace K_Means_Clustering
         }
 
 
-        public static void DrawClusterGraph(double[][] BaseMatrix, string PathToGraph, int GraphWidth, int GraphHeight, int FirstDimension, int SecondDimension)
+        public static void DrawClusterGraph(double[][] BaseMatrix, double[][][] ClusteredMatrix, string PathToGraph, int GraphWidth, int GraphHeight, int FirstDimension, int SecondDimension)
         {
             Bitmap b = new Bitmap(GraphWidth, GraphHeight);
             Graphics g = Graphics.FromImage(b);
@@ -36,7 +36,7 @@ namespace K_Means_Clustering
 
             g.FillRectangle(br, 0, 0, b.Width, b.Height);
 
-            Pen p1 = new Pen(Color.Black, 3);
+            Pen p1 = new Pen(Color.Black, 5);
             g.DrawLine(p1, 0, b.Height / 2, b.Width, b.Height / 2);
             g.DrawLine(p1, b.Width / 2, 0, b.Width / 2, b.Height);
 
@@ -58,6 +58,8 @@ namespace K_Means_Clustering
 
             Font f1 = new Font(FontFamily.GenericSansSerif, 12);
             Brush br2 = new SolidBrush(Color.Blue);
+            SolidBrush br3 = new SolidBrush(Color.Red);
+           
 
             double t1 = rangeX;
             double t2 = rangeY;
@@ -81,19 +83,85 @@ namespace K_Means_Clustering
                 g.DrawString(s, f1, br2, OX, (b.Height / 2) - 1);
                 t1 += 2*rangePerUnitX;
             }
-          
 
-            for (int i = 0; i < BaseMatrix.Length; i++)
+            scaleX /= 2 * rangePerUnitX;
+            scaleY /= 2 * rangePerUnitX;
+
+            //for (int i = 0; i < BaseMatrix.Length; i++)
+            //{
+            //    float x = (float)(BaseMatrix[i][FirstDimension]);
+            //    float y = (float)(BaseMatrix[i][SecondDimension]);
+
+
+            //    g.DrawEllipse(p2, (int)(scaleX*x + b.Width/2), (int)(b.Height / 2 - scaleY * y), 8, 8);
+            //}
+
+            for (int i = 0; i < Clustering.ClustersMade; i++)
             {
-                float x = (float)(BaseMatrix[i][FirstDimension]);
-                float y = (float)(BaseMatrix[i][SecondDimension]);
+                for (int j = 0; j < ClusteredMatrix[i].Length; j++)
+                {
+                    for (int k = 0; k < ClusteredMatrix[i][j].Length; k++)
+                    {
+                        float x = (float)(ClusteredMatrix[i][j][FirstDimension]);
+                        float y = (float)(ClusteredMatrix[i][j][SecondDimension]);
 
-                
-                g.DrawEllipse(p2, (int)(scaleX*x + b.Width/2), (int)(b.Height / 2 - scaleY * y), 8, 8);
+                        switch (i)
+                        {
+                            case 0:
+                                p2.Color = Color.Red;
+                                br3.Color = Color.Red;
+                                break;
+                            case 1:
+                                p2.Color = Color.Blue;
+                                br3.Color = Color.Blue;
+                                break;
+                            case 2:
+                                p2.Color = Color.Green;
+                                br3.Color = Color.Green;
+                                break;
+                            case 3:
+                                p2.Color = Color.Brown;
+                                br3.Color = Color.Brown;
+                                break;
+                            case 4:
+                                p2.Color = Color.Cyan;
+                                br3.Color = Color.Cyan;
+                                break;
+                            case 5:
+                                p2.Color = Color.Gold;
+                                br3.Color = Color.Gold;
+                                break;
+                            case 6:
+                                p2.Color = Color.Magenta;
+                                br3.Color = Color.Magenta;
+                                break;
+                            case 7:
+                                p2.Color = Color.Pink;
+                                br3.Color = Color.Pink;
+                                break;
+                            case 8:
+                                p2.Color = Color.Ivory;
+                                br3.Color = Color.Ivory;
+                                break;
+                            case 9:
+                                p2.Color = Color.Lime;
+                                br3.Color = Color.Lime;
+                                break;
+                            case 10:
+                                p2.Color = Color.Orange;
+                                br3.Color = Color.Orange;
+                                break;
+                            default:
+                                p2.Color = Color.Red;
+                                break;
+                        }
+
+
+                        g.DrawEllipse(p2, (int)(scaleX * x + b.Width / 2), (int)(b.Height / 2 - scaleY * y), 8, 8);
+                        g.FillEllipse(br3, (int)(scaleX * x + b.Width / 2), (int)(b.Height / 2 - scaleY * y), 8, 8);
+                    }
+                }
             }
-
-
-
 
 
 

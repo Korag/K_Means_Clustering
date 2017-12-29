@@ -13,9 +13,10 @@ namespace K_Means_Clustering
         {
             Stopwatch sw = new Stopwatch();
             Stopwatch sw2 = new Stopwatch();
+            string Path = @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\";
 
             double[][][] Matrix = new double[100][][];
-            double[][] Iris = DataSet.GetDataSet(@"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris.txt");
+            double[][] Iris = DataSet.GetDataSet(Path + "iris.txt");
             DataSet.ShowDataSet(Iris);
 
             Console.WriteLine();
@@ -32,7 +33,7 @@ namespace K_Means_Clustering
 
             
             DataSet.ShowVector(cluster);
-            DataSet.SaveVectorToFile(cluster, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_vector.txt");
+            DataSet.SaveVectorToFile(cluster, Path + "iris_vector.txt");
            
 
             Console.WriteLine();
@@ -41,8 +42,8 @@ namespace K_Means_Clustering
 
             Console.WriteLine("Data in cluster:");
             DataSet.ShowClustered(Iris, cluster, Clustering.quantityOfClusters);
-            DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\iris_clustered.txt");
-            DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+            DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, Path + "iris_clustered.txt");
+            DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, Path + "cluster");
 
          
             Console.WriteLine("How many more iterations: ");
@@ -50,7 +51,7 @@ namespace K_Means_Clustering
 
             sw2.Start();
             
-            Clustering.LoopIteration(Iris, Matrix, iterationsNumber, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+            Clustering.LoopIteration(Iris, Matrix, iterationsNumber, Path + "cluster");
 
             sw2.Stop();
 
@@ -58,10 +59,10 @@ namespace K_Means_Clustering
             Console.WriteLine("Choose 2 integers from 0 to " + (Iris[0].Length-1));
             int dimension1 = Convert.ToInt32(Console.ReadLine());
             int dimension2 = Convert.ToInt32(Console.ReadLine());
-            Drawing.DrawClusterGraph(Iris, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\graph", 3000, 3000, dimension1 , dimension2);
+            Drawing.DrawClusterGraph(Iris, Matrix, Path + "graph", 3000, 3000, dimension1 , dimension2);
 
             Console.WriteLine("End of the process ");
-            Console.WriteLine("1 iteration at time: " + sw.Elapsed);
+            Console.WriteLine("First iteration at time: " + sw.Elapsed);
             Console.WriteLine("Others iterations at time: " + sw2.Elapsed);
             Console.ReadLine();
         }
