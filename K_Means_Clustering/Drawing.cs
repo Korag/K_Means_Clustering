@@ -9,6 +9,7 @@ namespace K_Means_Clustering
 {
     class Drawing
     {
+        // Wyszukiwanie najwiekszej wartosci w zbiorze danych dla danego wymiaru
         private static double SearchRange(double[][] BaseMatrix, int Dimension)
         {
             double range = 0;
@@ -27,6 +28,7 @@ namespace K_Means_Clustering
             return range;
         }
 
+        // Funkcja do rysowania najbardziej podstawowego wykresu
         public static void DrawClusterGraph(double[][] BaseMatrix, double[][][] ClusteredMatrix, string PathToGraph, int GraphWidth, int GraphHeight, int FirstDimension, int SecondDimension, int iterationsNumber)
         {
             Bitmap b = new Bitmap(GraphWidth, GraphHeight);
@@ -39,6 +41,7 @@ namespace K_Means_Clustering
             g.DrawLine(p1, 0, b.Height / 2, b.Width, b.Height / 2);
             g.DrawLine(p1, b.Width / 2, 0, b.Width / 2, b.Height);
 
+            // Zakresy oraz skala
             double rangeX = Math.Ceiling(SearchRange(BaseMatrix, FirstDimension));
             double rangeY = Math.Ceiling(SearchRange(BaseMatrix, SecondDimension));
             double Unit = 30;
@@ -63,6 +66,7 @@ namespace K_Means_Clustering
             double t1 = rangeX;
             double t2 = rangeY;
 
+            // Rysowanie osi wspolrzednych
             for (int OY = 0; OY < b.Height; OY += dy)
             {
                 g.DrawLine(p11, 0, OY, b.Width, OY);
@@ -86,15 +90,7 @@ namespace K_Means_Clustering
             scaleX /= 2 * rangePerUnitX;
             scaleY /= 2 * rangePerUnitX;
 
-            for (int i = 0; i < BaseMatrix.Length; i++)
-            {
-                float x = (float)(BaseMatrix[i][FirstDimension]);
-                float y = (float)(BaseMatrix[i][SecondDimension]);
-
-
-                g.DrawEllipse(p2, (int)(scaleX * x + b.Width / 2), (int)(b.Height / 2 - scaleY * y), 8, 8);
-            }
-
+            // Rysowanie elips 
             for (int i = 0; i < Clustering.ClustersMade; i++)
             {
                 for (int j = 0; j < ClusteredMatrix[i].Length; j++)
@@ -165,6 +161,7 @@ namespace K_Means_Clustering
             b.Save(PathToGraph + ".png");
         }
 
+        // Funkcja do rysowania wykresu z uwzglednieniem dziedziczenia(kolor figury) po nadrzednej iteracji
         public static void DrawClusterGraph2(double[][] BaseMatrix, double[][][] ClusteredMatrix, string PathToGraph, int GraphWidth, int GraphHeight, int FirstDimension, int SecondDimension, int iterationsNumber)
         {
             Bitmap b = new Bitmap(GraphWidth, GraphHeight);
@@ -291,10 +288,13 @@ namespace K_Means_Clustering
                 }
             }
 
+            // Ilosc iteracji
             for (int z = 0; z < iterationsNumber; z++)
             {
+                // Ilosc klastrow z nadrzednej iteracji (za 1 razem jest to liczba klastrow z tzw Basic Iteracji)
                 for (int m = 0; m < Clustering.ClustersBasicQuantity+Clustering.ClustersInIterations[z]; m++)
                 {
+                    // Ilosc klastrow stworzonych dla kazdego klastra z iteracji wyzszej
                     for (int i = Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z] + 2*m; i < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z + 1] + 2*m; i++)
                     {
                         for (int j = 0; j < ClusteredMatrix[i].Length; j++)
@@ -379,7 +379,7 @@ namespace K_Means_Clustering
             b.Save(PathToGraph + ".png");
         }
 
-
+        // Funkcja rysowania z nieco innym przedstawieniem dziedziczenia po klastrach z iteracji nadrzednej
         public static void DrawClusterGraph3(double[][] BaseMatrix, double[][][] ClusteredMatrix, string PathToGraph, int GraphWidth, int GraphHeight, int FirstDimension, int SecondDimension, int iterationsNumber)
         {
             Bitmap b = new Bitmap(GraphWidth, GraphHeight);

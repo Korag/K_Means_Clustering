@@ -13,6 +13,7 @@ namespace K_Means_Clustering
         private static int t = 0;
         public static int numerator = 0;
 
+        // Pobranie danych z pliku do tablicy
         public static double[][] GetDataSet(string path)
         {
             double[][] DataSet;
@@ -39,32 +40,7 @@ namespace K_Means_Clustering
             return null;
         }
 
-        public static double[][] GetDataSet_(string path)
-        {
-            double[][] DataSet;
-            try
-            {
-                string[] s1 = File.ReadAllLines(path);
-                DataSet = new double[s1.Length][];
-                for (int i = 0; i < s1.Length; i++)
-                {
-                    string[] s2 = s1[i].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    DataSet[i] = new double[s2.Length];
-                    for (int j = 0; j < s2.Length; j++)
-                    {
-                        DataSet[i][j] = Double.Parse(s2[j]);
-                    }
-                }
-                return DataSet;
-            }
-
-            catch
-            {
-
-            }
-            return null;
-        }
-
+        // Prezentacja 2 wymiarowej tablicy
         public static void ShowDataSet(double[][] DataSet)
         {
             for (int i = 0; i < DataSet.Length; i++)
@@ -77,6 +53,7 @@ namespace K_Means_Clustering
             }
         }
 
+        // Prezentacja podzialu na klastry dla danego zbioru danych
         public static void ShowClustered(double[][] DataSet, int[] cluster, int quantityOfClusters)
         {
             for (int k = 0; k < quantityOfClusters; k++)
@@ -99,6 +76,7 @@ namespace K_Means_Clustering
             }
         }
 
+        // Zapis do pliku podzialu na klastry
         public static void SaveClusteredToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
         {
             using (StreamWriter sw = new StreamWriter(Path))
@@ -124,6 +102,7 @@ namespace K_Means_Clustering
             }
         }
 
+        // Zapis kazdego klastra do oddzielnego pliku
         public static void SaveEachClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
         {
             for (int k = 0; k < quantityOfClusters; k++)
@@ -152,51 +131,7 @@ namespace K_Means_Clustering
             }
         }
 
-        //public static void SaveOneClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
-        //{
-        //    for (int k = 0; k < quantityOfClusters; k++)
-        //    {
-        //        using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
-        //        {
-
-        //            for (int i = 0; i < DataSet.Length; i++)
-        //            {
-        //                int clusterID = cluster[i];
-        //                if (clusterID != k) continue;
-
-        //                for (int j = 0; j < DataSet[i].Length; j++)
-        //                {
-        //                    sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
-        //                }
-        //                sw.WriteLine("");
-        //            }
-        //        }
-        //        t++;
-        //    }
-        //}
-
-        public static double[][][] AddToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters, int ClustersMade)
-        {
-            double[][][] Matrix = new double[100][][];
-            for (int k = ClustersMade; k < ClustersMade + quantityOfClusters; k++)
-            {
-                for (int i = 0; i < DataSet.Length; i++)
-                {
-                    Matrix[k] = new double[DataSet.Length][];
-
-                    int clusterID = cluster[i];
-                    if (clusterID != k) continue;
-
-                    for (int j = 0; j < DataSet[i].Length; j++)
-                    {
-                        Matrix[k][i] = new double[DataSet[i].Length];
-                        Matrix[k][i][j] = DataSet[i][j];
-                    }
-                }
-            }
-            return Matrix;
-        }
-
+        // Dodanie pojedynczego klastra do tablicy 
         public static double[][] AddOneClusterToMatrix(double[][] DataSet, int[] cluster, int quantityOfClusters)
         {
             double[][] Matrix = new double[DataSet.Length][];
@@ -219,6 +154,7 @@ namespace K_Means_Clustering
             return Matrix;
         }
 
+        // Prezentacja wektora
         public static void ShowVector(int[] Vector)
         {
             for (int i = 0; i < Vector.Length; i++)
@@ -227,6 +163,7 @@ namespace K_Means_Clustering
             }
         }
 
+        // Zapis wektora do pliku
         public static void SaveVectorToFile(int[] Vector, string Path)
         {
             using (StreamWriter sw = new StreamWriter(Path))

@@ -13,12 +13,17 @@ namespace K_Means_Clustering
         {
             Stopwatch sw = new Stopwatch();
             Stopwatch sw2 = new Stopwatch();
+            // Sciezka do glownego katalogu programu  --> wazne zeby na koncu zostal '\'
+            // W srodku katalogu powinien znajdowac sie plik z danym (iris.txt)
+            // Do tego katalogu są zapisywane dodatkowe elementy jak np. wykres, czy pliki tekstowe z klastrami
             string Path = @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\";
 
             double[][][] Matrix = new double[100][][];
+            // Wczytanie danych z pliku
             double[][] Iris = DataSet.GetDataSet(Path + "iris.txt");
             DataSet.ShowDataSet(Iris);
 
+            // Ustawienie liczebnosci klastrow dla 1 iteracji
             Console.WriteLine();
             Clustering.SetQuantity();
             Console.WriteLine();
@@ -26,12 +31,13 @@ namespace K_Means_Clustering
 
             sw.Start();
 
+            // Glowna funkcja
             int[] cluster = Clustering.EnableClustering(Iris, Clustering.quantityOfClusters);
             Clustering.FirstIteration(Iris, Matrix, cluster);
 
             sw.Stop();
 
-            
+            // Wyrzucenie na konsole wektora [] cluster oraz jego zapis do pliku
             DataSet.ShowVector(cluster);
             DataSet.SaveVectorToFile(cluster, Path + "iris_vector.txt");
            
@@ -39,7 +45,7 @@ namespace K_Means_Clustering
             Console.WriteLine();
             Console.WriteLine();
 
-
+            // Wyrzucenie na konsole podzialu na klastry po 1 iteracji oraz zapis do plikow
             Console.WriteLine("Data in cluster:");
             DataSet.ShowClustered(Iris, cluster, Clustering.quantityOfClusters);
             DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, Path + "iris_clustered.txt");
@@ -51,14 +57,18 @@ namespace K_Means_Clustering
 
             sw2.Start();
             
+            // Podzial wczesniej stworzonych klastrow na kolejne 
             Clustering.LoopIteration(Iris, Matrix, iterationsNumber, Path + "cluster");
 
             sw2.Stop();
 
+            // Rysowanie wykresu z wyborem atrybutow
             Console.WriteLine("Generate Graph from which dimensions: ");
             Console.WriteLine("Choose 2 integers from 0 to " + (Iris[0].Length-1));
             int dimension1 = Convert.ToInt32(Console.ReadLine());
             int dimension2 = Convert.ToInt32(Console.ReadLine());
+
+            // Funkcja rysowania wykresu ---> dostepne rowniez 2 inne funkcje: DrawClusterGraph i DrawClusterGraph3
             Drawing.DrawClusterGraph2(Iris, Matrix, Path + "graph", 3000, 3000, dimension1 , dimension2, iterationsNumber);
 
             Console.WriteLine("End of the process ");

@@ -14,14 +14,14 @@ namespace K_Means_Clustering
         public static int[] ClustersInIterations;
 
 
-        // How many clusters?
+        // Ustawienie liczebnosci klastrow
         public static void SetQuantity()
         {
             Console.WriteLine("How many Clusters: ");
             quantityOfClusters = Convert.ToInt32(Console.ReadLine());
         }
 
-        // Creating top level of clusters
+        // Zapisanie tzw. Basic Iteration do tablicy
         public static void FirstIteration(double[][] BaseMatrix, double[][][] Matrix, int[] cluster)
         {
             for (int i = 0; i < Clustering.quantityOfClusters; i++)
@@ -33,12 +33,12 @@ namespace K_Means_Clustering
             Clustering.ClustersBasicQuantity = Clustering.quantityOfClusters;
         }
 
-        // Loop for nested clusters
+        // Petla pozwalajaca na wykonanie kolejnego klastrowania z wczesniej utworzonych klastrow
         public static void LoopIteration(double[][] BaseMatrix, double[][][] Matrix, int iterationsNumber, string Path)
         {
-            // pomocnicze iteratory
+            // Pomocnicze iteratory
             int p = 0;
-            // ilosc ostatnio stworzonych klastrow jako ograniczenie w petli, a poczatek matrix petla z parametru ClustersMade
+ 
             int ClusterMark = 0;
             int HigherLevelQuantity = Clustering.quantityOfClusters;
             Clustering.ClustersInIterations = new int[iterationsNumber+1];
@@ -52,12 +52,12 @@ namespace K_Means_Clustering
 
                 for (int i = 0; i < HigherLevelQuantity; i++)
                 {
-                    // rozwazyc usuniecie clusterHelper
+
                     int[] clusterHelper = Clustering.EnableClustering(Matrix[p], Clustering.quantityOfClusters);
                     for (int j = 0; j < Clustering.quantityOfClusters; j++)
                     {
                         Matrix[Clustering.ClustersMade] = DataSet.AddOneClusterToMatrix(Matrix[p], clusterHelper, Clustering.quantityOfClusters);
-                        //DataSet.SaveOneClusterToFile(Matrix[Clustering.ClustersMade], clusterHelper, Clustering.quantityOfClusters, @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\cluster");
+                        
                         Clustering.ClustersMade++;
                         ClustersInIteration++;
                     }
@@ -71,7 +71,7 @@ namespace K_Means_Clustering
         }
        
 
-        // Normalized dataset
+        // Normalizacja danych
         private static double[][] ConvertToNormalize(double[][] DataSet)
         {
             double[][] copyData = new double[DataSet.Length][];
@@ -112,7 +112,7 @@ namespace K_Means_Clustering
             return copyData;
         }
 
-        // First clusters assign
+        // Wstepne przypisanie klastrow (zeby zaden nie byl pusty na starcie algorytmu)
         private static int[] Initialize(int quantityOfSingleData, int quantityOfClusters)
         {
             Random R = new Random();
@@ -129,7 +129,7 @@ namespace K_Means_Clustering
             return cluster;
         }
 
-
+        // Tworzenie tablicy srednich
         private static double[][] Allocate(int quantityOfClusters, int quantityOfColumnsData)
         {
             double[][] allocateMatrix = new double[quantityOfClusters][];
@@ -140,6 +140,7 @@ namespace K_Means_Clustering
             return allocateMatrix;
         }
 
+        // Funkcja aktualizujaca srednia
         private static bool UpdateMeans(double[][] NormalizedData, int[] cluster, ref double[][] means, int quantityOfClusters)
         {
             int[] quantityOfSingleDataInSingleCluster = new int[quantityOfClusters];
@@ -153,12 +154,12 @@ namespace K_Means_Clustering
             {
                 if (quantityOfSingleDataInSingleCluster[i]==0)
                 {
-                    // one of cluster is empty
+                    // Klaster jest pusty
                     return false;
                 }
             }
 
-            // update the means
+            // Aktualizacja srednich
             for (int i = 0; i < means.Length; i++)
             {
                 for (int j = 0; j < means[i].Length; j++)
@@ -172,7 +173,7 @@ namespace K_Means_Clustering
                 int IndexOfCluster = cluster[i];
                 for (int j = 0; j < NormalizedData[i].Length; j++)
                 {
-                    // sum SingleData belongs to each cluster
+                    // Suma danych nalezacych do danego klastru
                     means[IndexOfCluster][j] += NormalizedData[i][j];
                 }
             }
@@ -188,6 +189,7 @@ namespace K_Means_Clustering
         }
 
 
+        // Funkcja aktualizujaca przypisanie klastrow
         private static bool UpdateClustering(double[][] NormalizedData, int[] cluster, double[][] means, int quantityOfClusters)
         {
             bool changed = false;
@@ -198,7 +200,7 @@ namespace K_Means_Clustering
                 newCluster[i] = cluster[i];
             }
 
-            // distance from vectorOfRow to mean 
+            // Obliczanie dystansu pomiedzy wierszami a srednia
             double[] distances = new double[quantityOfClusters];
 
             for (int i = 0; i < NormalizedData.Length; i++)
@@ -209,7 +211,7 @@ namespace K_Means_Clustering
                 }
 
                 int newClusterID = IndexOfMinValue(distances);
-                // update assigns clusters
+                // Aktualizacja przypisania
                 if (newClusterID != newCluster[i])
                 {
                     changed = true;
@@ -222,7 +224,7 @@ namespace K_Means_Clustering
                 return false;
             }
 
-            // check new assign
+            // Sprawdzanie nowego przypisania
             int[] quantityOfSingleDataInSingleCluster = new int[quantityOfClusters];
 
             for (int i = 0; i < NormalizedData.Length; i++)
@@ -235,21 +237,22 @@ namespace K_Means_Clustering
             {
                 if (quantityOfSingleDataInSingleCluster[i] == 0)
                 {
-                    // cluster is empty
+                    // Klaster jest pusty
                     return false;
                 }
             }
 
-            // update original cluster[]
+            // Aktualizacja oryginalnego cluster[]
             for (int i = 0; i < newCluster.Length; i++)
             {
                 cluster[i] = newCluster[i];
             }
 
-            // at least one change in assing SingleData to clusters and NO empty clusters
+            // Przynajmniej jedna zmiana w przypisaniu klastrow oraz brak pustego klastra
             return true;
         }
 
+        // Obliczanie dystansu
         private static double Distance(double[] vectorOfSingleRow, double[] mean)
         {
             double sumSquaredDifferencials = 0.00;
@@ -260,9 +263,9 @@ namespace K_Means_Clustering
             return Math.Sqrt(sumSquaredDifferencials);
         }
 
+        // Wyszukiwanie najmniejszej wartosci
         private static int IndexOfMinValue(double[] distances)
         {
-            // index of the smallest value in array
             int IndexOfMin = 0;
             double smallDistance = distances[0];
             for (int i = 0; i < distances.Length; i++)
@@ -276,7 +279,7 @@ namespace K_Means_Clustering
             return IndexOfMin;
         }
 
-        // Core of the clustering algorithm
+        // Rdzen algorytmu --> wykonujacy funkcje powyzej
         public static int[] EnableClustering(double[][] DataSet, int quantityOfClusters)
         {
             double[][] NormalizedData = ConvertToNormalize(DataSet);
