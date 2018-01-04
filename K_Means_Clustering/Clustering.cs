@@ -10,6 +10,8 @@ namespace K_Means_Clustering
     {
         public static int quantityOfClusters;
         public static int ClustersMade;
+        public static int ClustersBasicQuantity;
+        public static int[] ClustersInIterations;
 
 
         // How many clusters?
@@ -28,6 +30,7 @@ namespace K_Means_Clustering
                 Clustering.ClustersMade++;
             }
             DataSet.numerator = 0;
+            Clustering.ClustersBasicQuantity = Clustering.quantityOfClusters;
         }
 
         // Loop for nested clusters
@@ -38,12 +41,14 @@ namespace K_Means_Clustering
             // ilosc ostatnio stworzonych klastrow jako ograniczenie w petli, a poczatek matrix petla z parametru ClustersMade
             int ClusterMark = 0;
             int HigherLevelQuantity = Clustering.quantityOfClusters;
+            Clustering.ClustersInIterations = new int[iterationsNumber+1];
+            Clustering.ClustersInIterations[0] = 0;
             for (int k = 0; k < iterationsNumber; k++)
             {
                 int ClustersInIteration = 0;
                 Clustering.SetQuantity();
                 ClusterMark = Clustering.ClustersMade;
-
+                Clustering.ClustersInIterations[k+1] = Clustering.quantityOfClusters;
 
                 for (int i = 0; i < HigherLevelQuantity; i++)
                 {

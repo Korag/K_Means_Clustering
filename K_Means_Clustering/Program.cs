@@ -59,7 +59,7 @@ namespace K_Means_Clustering
             Console.WriteLine("Choose 2 integers from 0 to " + (Iris[0].Length-1));
             int dimension1 = Convert.ToInt32(Console.ReadLine());
             int dimension2 = Convert.ToInt32(Console.ReadLine());
-            Drawing.DrawClusterGraph(Iris, Matrix, Path + "graph", 3000, 3000, dimension1 , dimension2);
+            Drawing.DrawClusterGraph2(Iris, Matrix, Path + "graph", 3000, 3000, dimension1 , dimension2, iterationsNumber);
 
             Console.WriteLine("End of the process ");
             Console.WriteLine("First iteration at time: " + sw.Elapsed);
