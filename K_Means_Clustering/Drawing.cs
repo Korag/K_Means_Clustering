@@ -13,7 +13,7 @@ namespace K_Means_Clustering
         private static double SearchRange(double[][] BaseMatrix, int Dimension)
         {
             double range = 0;
-            double maxValue = BaseMatrix[1][Dimension];
+            double maxValue = BaseMatrix[0][Dimension];
 
             for (int i = 1; i < BaseMatrix.Length; i++)
             {
@@ -295,7 +295,7 @@ namespace K_Means_Clustering
                 for (int m = 0; m < Clustering.ClustersBasicQuantity+Clustering.ClustersInIterations[z]; m++)
                 {
                     // Ilosc klastrow stworzonych dla kazdego klastra z iteracji wyzszej
-                    for (int i = Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z] + 2*m; i < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z + 1] + 2*m; i++)
+                    for (int i = Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z] + Clustering.ClustersInIterations[z+1] * m; i < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z + 1] + Clustering.ClustersInIterations[z+1] * m; i++)
                     {
                         for (int j = 0; j < ClusteredMatrix[i].Length; j++)
                         {
@@ -499,7 +499,7 @@ namespace K_Means_Clustering
             {
                 for (int m = 0; m < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z]; m++)
                 {
-                    for (int i = Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z] + 2 * m; i < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z + 1] + 2 * m; i++)
+                    for (int i = Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z] + Clustering.ClustersInIterations[z+1] * m; i < Clustering.ClustersBasicQuantity + Clustering.ClustersInIterations[z + 1] + Clustering.ClustersInIterations[z+1] * m; i++)
                     {
                         for (int j = 0; j < ClusteredMatrix[i].Length; j++)
                         {

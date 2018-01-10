@@ -16,7 +16,7 @@ namespace K_Means_Clustering
             // Sciezka do glownego katalogu programu  --> wazne zeby na koncu zostal '\'
             // W srodku katalogu powinien znajdowac sie plik z danym (iris.txt)
             // Do tego katalogu są zapisywane dodatkowe elementy jak np. wykres, czy pliki tekstowe z klastrami
-            string Path = @"C:\Users\user\Documents\Visual Studio 2017\Projects\K_Means_Clustering\";
+            string Path = @"C:\Users\Łukasz\Documents\Visual Studio 2017\Projects\K_Means_Clustering\";
 
             double[][][] Matrix = new double[100][][];
             // Wczytanie danych z pliku
