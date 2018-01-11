@@ -14,7 +14,7 @@ namespace K_Means_Clustering
         public static int numerator = 0;
 
         // Pobranie danych z pliku do tablicy
-        public static double[][] GetDataSet(string path,int LastColumnInterpreter)
+        public static double[][] GetDataSet(string path, int LastColumnInterpreter)
         {
             double[][] DataSet;
             try
@@ -24,7 +24,7 @@ namespace K_Means_Clustering
                 for (int i = 0; i < s1.Length; i++)
                 {
                     string[] s2 = s1[i].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                    DataSet[i] = new double[s2.Length];
+                    DataSet[i] = new double[s2.Length - LastColumnInterpreter];
                     for (int j = 0; j < s2.Length - LastColumnInterpreter; j++)
                     {
                         DataSet[i][j] = Double.Parse(s2[j], CultureInfo.InvariantCulture);
@@ -103,7 +103,7 @@ namespace K_Means_Clustering
         }
 
         // Zapis kazdego klastra do oddzielnego pliku
-        public static void SaveEachClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path, int iteration, int higher)
+        public static void SaveEachClusterToFile(double[][] DataSet,string[] StringSet, int[] cluster, int quantityOfClusters, string Path, int iteration, int higher)
         {
             int s = 0;
             for (int k = 0; k < quantityOfClusters; k++)
@@ -119,6 +119,15 @@ namespace K_Means_Clustering
 
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
+                            if (StringSet != null)
+                            {
+                                if (j == DataSet[i].Length - 1)
+                                {
+                                    sw.Write(StringSet[i].ToString() + " ");
+                                    continue;
+                                }
+                            }
+
                             if (DataSet[i][j] == 0)
                             {
                                 break;
@@ -132,7 +141,34 @@ namespace K_Means_Clustering
             }
         }
 
-        public static void SaveEachClusterToFile_Basic(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        // Tworzenie tablicy ostatniego parametru typu string
+        public static string[] GetStringVector(string path)
+        {
+            string[] StringSet;
+            try
+            {
+                string[] s1 = File.ReadAllLines(path);
+                StringSet = new string[s1.Length];
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    string[] s2 = s1[i].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    StringSet[i] = s2[s2.Length-1];
+                }
+                return StringSet;
+            }
+
+            catch
+            {
+
+            }
+            return null;
+
+        }
+            
+
+
+        // Zapis kazdego klastra do oddzielnego pliku dla iteracji 0 (tzw. bazowej)
+        public static void SaveEachClusterToFile_Basic(double[][] DataSet, string[] StringSet, int[] cluster, int quantityOfClusters, string Path)
         {
             int s = 0;
             for (int k = 0; k < quantityOfClusters; k++)
@@ -148,10 +184,20 @@ namespace K_Means_Clustering
 
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
+                            if (StringSet!=null)
+                            {
+                                if (j == DataSet[i].Length - 1)
+                                {
+                                    sw.Write(StringSet[i].ToString() + " ");
+                                    continue;
+                                }
+                            }
+
                             if (DataSet[i][j] == 0)
                             {
                                 break;
                             }
+                           
                             sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
                         }
                         sw.WriteLine("");

@@ -34,7 +34,7 @@ namespace K_Means_Clustering
         }
 
         // Petla pozwalajaca na wykonanie kolejnego klastrowania z wczesniej utworzonych klastrow
-        public static void LoopIteration(double[][] BaseMatrix, double[][][] Matrix, int iterationsNumber, string Path)
+        public static void LoopIteration(double[][] BaseMatrix, string[] StringSet, double[][][] Matrix, int iterationsNumber, string Path)
         {
             // Pomocnicze iteratory
             int p = 0;
@@ -47,6 +47,7 @@ namespace K_Means_Clustering
             for (int k = 0; k < iterationsNumber; k++)
             {
                 int ClustersInIteration = 0;
+                Console.WriteLine();
                 Clustering.SetQuantity();
                 Clustering.ClustersInIterations[k+1] = Clustering.quantityOfClusters;
 
@@ -63,7 +64,7 @@ namespace K_Means_Clustering
                         ClustersInIteration++;
                     }
                     
-                    DataSet.SaveEachClusterToFile(Matrix[p], clusterHelper, Clustering.quantityOfClusters, Path , ClusterMark, ClusterMark2);
+                    DataSet.SaveEachClusterToFile(Matrix[p], StringSet, clusterHelper, Clustering.quantityOfClusters, Path , ClusterMark, ClusterMark2);
                     DataSet.numerator = 0;
                     p++;
                     ClusterMark2++;

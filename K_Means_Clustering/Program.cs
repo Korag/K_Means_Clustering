@@ -25,6 +25,8 @@ namespace K_Means_Clustering
             string ShortName = Console.ReadLine();
             string FileName = ShortName + ".txt";
             Console.WriteLine();
+
+            // Zapytanie czy ostatnim parametrem w naszym zbiorze danych jest parametr typu string
             Console.WriteLine("Is the last column in your dataset a string parameter? y/n");
             string stringParam = Console.ReadLine();
             int LastColumnInterpreter = 0;
@@ -33,7 +35,12 @@ namespace K_Means_Clustering
                 LastColumnInterpreter = 1;
             }
 
+            string[] stringLastParam = null;
             double[][] FileNameMatrix = DataSet.GetDataSet(Path + FileName, LastColumnInterpreter);
+            if (stringParam == "y")
+            {
+                stringLastParam = DataSet.GetStringVector(Path + FileName);
+            }
             //DataSet.ShowDataSet(FileNameMatrix);
 
             // Ustawienie liczebnosci klastrow dla 0 iteracji
@@ -62,7 +69,7 @@ namespace K_Means_Clustering
             //DataSet.ShowClustered(FileNameMatrix, cluster, Clustering.quantityOfClusters);
             //DataSet.SaveClusteredToFile(FileNameMatrix, cluster, Clustering.quantityOfClusters, Path + ShortName + "_clustered.txt");
 
-            DataSet.SaveEachClusterToFile_Basic(FileNameMatrix, cluster, Clustering.quantityOfClusters, Path + ShortName);
+            DataSet.SaveEachClusterToFile_Basic(FileNameMatrix, stringLastParam, cluster, Clustering.quantityOfClusters, Path + ShortName);
 
          
             Console.WriteLine("Enter loop execution count (cluster generation): ");
@@ -71,7 +78,7 @@ namespace K_Means_Clustering
             sw2.Start();
             
             // Podzial wczesniej stworzonych klastrow na kolejne 
-            Clustering.LoopIteration(FileNameMatrix, Matrix, iterationsNumber, Path + ShortName);
+            Clustering.LoopIteration(FileNameMatrix, stringLastParam, Matrix, iterationsNumber, Path + ShortName);
 
             sw2.Stop();
 
