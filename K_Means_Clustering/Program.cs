@@ -21,11 +21,20 @@ namespace K_Means_Clustering
             double[][][] Matrix = new double[100][][];
             // Wczytanie danych z pliku
 
-            Console.WriteLine("Enter filename of dataset: (with extension .txt)"); 
-            string FileName = Console.ReadLine();
+            Console.WriteLine("Enter filename of dataset: (without extension: .txt)");
+            string ShortName = Console.ReadLine();
+            string FileName = ShortName + ".txt";
+            Console.WriteLine();
+            Console.WriteLine("Is the last column in your dataset a string parameter? y/n");
+            string stringParam = Console.ReadLine();
+            int LastColumnInterpreter = 0;
+            if (stringParam == "y")
+            {
+                LastColumnInterpreter = 1;
+            }
 
-            double[][] FileNameMatrix = DataSet.GetDataSet(Path + FileName);
-            //DataSet.ShowDataSet(Iris);
+            double[][] FileNameMatrix = DataSet.GetDataSet(Path + FileName, LastColumnInterpreter);
+            //DataSet.ShowDataSet(FileNameMatrix);
 
             // Ustawienie liczebnosci klastrow dla 0 iteracji
             Console.WriteLine();
@@ -44,15 +53,16 @@ namespace K_Means_Clustering
             // Wyrzucenie na konsole wektora [] cluster oraz jego zapis do pliku
 
             //DataSet.ShowVector(cluster);
-            DataSet.SaveVectorToFile(cluster, Path + "iris_vector.txt");
-           
+            DataSet.SaveVectorToFile(cluster, Path + ShortName + "_vector.txt");
 
-            // Wyrzucenie na konsole podzialu na klastry po 1 iteracji oraz zapis do plikow
+
+            // Wyrzucenie na konsole podzialu na klastry po 0 iteracji oraz zapis do plikow
 
             //Console.WriteLine("Data in cluster:");
-            //DataSet.ShowClustered(Iris, cluster, Clustering.quantityOfClusters);
-            //DataSet.SaveClusteredToFile(Iris, cluster, Clustering.quantityOfClusters, Path + "iris_clustered.txt");
-            //DataSet.SaveEachClusterToFile(Iris, cluster, Clustering.quantityOfClusters, Path + "cluster");
+            //DataSet.ShowClustered(FileNameMatrix, cluster, Clustering.quantityOfClusters);
+            //DataSet.SaveClusteredToFile(FileNameMatrix, cluster, Clustering.quantityOfClusters, Path + ShortName + "_clustered.txt");
+
+            DataSet.SaveEachClusterToFile_Basic(FileNameMatrix, cluster, Clustering.quantityOfClusters, Path + ShortName);
 
          
             Console.WriteLine("Enter loop execution count (cluster generation): ");
@@ -61,21 +71,21 @@ namespace K_Means_Clustering
             sw2.Start();
             
             // Podzial wczesniej stworzonych klastrow na kolejne 
-            Clustering.LoopIteration(FileNameMatrix, Matrix, iterationsNumber, Path + "cluster");
+            Clustering.LoopIteration(FileNameMatrix, Matrix, iterationsNumber, Path + ShortName);
 
             sw2.Stop();
 
             // Rysowanie wykresu z wyborem atrybutow
             Console.WriteLine();
             Console.WriteLine("Generate Graph");
-            Console.WriteLine("Choose 2 integers(dimensions) from 0 to " + (FileNameMatrix[0].Length-1));
+            Console.WriteLine("Choose 2 integers(dimensions) from 0 to " + (FileNameMatrix[0].Length-1-LastColumnInterpreter));
             Console.Write("Dimension 1: ");
             int dimension1 = Convert.ToInt32(Console.ReadLine());
             Console.Write("Dimension 2: ");
             int dimension2 = Convert.ToInt32(Console.ReadLine());
 
             // Funkcja rysowania wykresu ---> dostepne rowniez 2 inne funkcje: DrawClusterGraph i DrawClusterGraph3
-            Drawing.DrawClusterGraph2(FileNameMatrix, Matrix, Path + "graph", 3000, 3000, dimension1 , dimension2, iterationsNumber);
+            Drawing.DrawClusterGraph2(FileNameMatrix, Matrix, Path + ShortName, 3000, 3000, dimension1 , dimension2, iterationsNumber);
 
             Console.WriteLine("End of the process ");
             Console.WriteLine("Zero iteration at time: " + sw.Elapsed);

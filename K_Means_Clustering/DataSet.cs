@@ -14,7 +14,7 @@ namespace K_Means_Clustering
         public static int numerator = 0;
 
         // Pobranie danych z pliku do tablicy
-        public static double[][] GetDataSet(string path)
+        public static double[][] GetDataSet(string path,int LastColumnInterpreter)
         {
             double[][] DataSet;
             try
@@ -25,7 +25,7 @@ namespace K_Means_Clustering
                 {
                     string[] s2 = s1[i].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                     DataSet[i] = new double[s2.Length];
-                    for (int j = 0; j < s2.Length; j++)
+                    for (int j = 0; j < s2.Length - LastColumnInterpreter; j++)
                     {
                         DataSet[i][j] = Double.Parse(s2[j], CultureInfo.InvariantCulture);
                     }
@@ -103,11 +103,12 @@ namespace K_Means_Clustering
         }
 
         // Zapis kazdego klastra do oddzielnego pliku
-        public static void SaveEachClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        public static void SaveEachClusterToFile(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path, int iteration, int higher)
         {
+            int s = 0;
             for (int k = 0; k < quantityOfClusters; k++)
             {
-                using (StreamWriter sw = new StreamWriter(Path + $"{t}.txt"))
+                using (StreamWriter sw = new StreamWriter(Path + $"{iteration}-{higher}-{s}.txt"))
                 {
 
                     for (int i = 0; i < DataSet.Length; i++)
@@ -127,7 +128,36 @@ namespace K_Means_Clustering
                         sw.WriteLine("");
                     }
                 }
-                t++;
+                s++;
+            }
+        }
+
+        public static void SaveEachClusterToFile_Basic(double[][] DataSet, int[] cluster, int quantityOfClusters, string Path)
+        {
+            int s = 0;
+            for (int k = 0; k < quantityOfClusters; k++)
+            {
+                using (StreamWriter sw = new StreamWriter(Path + $"{0}-{s}.txt"))
+                {
+
+                    for (int i = 0; i < DataSet.Length; i++)
+                    {
+                        int clusterID = cluster[i];
+                        if (clusterID != k) continue;
+
+
+                        for (int j = 0; j < DataSet[i].Length; j++)
+                        {
+                            if (DataSet[i][j] == 0)
+                            {
+                                break;
+                            }
+                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+                        }
+                        sw.WriteLine("");
+                    }
+                }
+                s++;
             }
         }
 
@@ -174,5 +204,16 @@ namespace K_Means_Clustering
                 }
             }
         }
+
+        // Zliczanie plikow w katalogu 
+        public static int CountElements(string Path)
+        {
+            DirectoryInfo d1 = new DirectoryInfo(Path);
+            FileInfo[] f1 = d1.GetFiles();
+            int count = f1.Length;
+            return count;
+        }
+
+
     }
 }

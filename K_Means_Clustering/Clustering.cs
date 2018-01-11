@@ -39,7 +39,8 @@ namespace K_Means_Clustering
             // Pomocnicze iteratory
             int p = 0;
  
-            int ClusterMark = 0;
+            int ClusterMark = 1;
+            int ClusterMark2 = 0;
             int HigherLevelQuantity = Clustering.quantityOfClusters;
             Clustering.ClustersInIterations = new int[iterationsNumber+1];
             Clustering.ClustersInIterations[0] = 0;
@@ -47,9 +48,9 @@ namespace K_Means_Clustering
             {
                 int ClustersInIteration = 0;
                 Clustering.SetQuantity();
-                ClusterMark = Clustering.ClustersMade;
                 Clustering.ClustersInIterations[k+1] = Clustering.quantityOfClusters;
 
+                ClusterMark2 = 0;
                 for (int i = 0; i < HigherLevelQuantity; i++)
                 {
 
@@ -61,10 +62,13 @@ namespace K_Means_Clustering
                         Clustering.ClustersMade++;
                         ClustersInIteration++;
                     }
-                    DataSet.SaveEachClusterToFile(Matrix[p], clusterHelper, Clustering.quantityOfClusters, Path);
+                    
+                    DataSet.SaveEachClusterToFile(Matrix[p], clusterHelper, Clustering.quantityOfClusters, Path , ClusterMark, ClusterMark2);
                     DataSet.numerator = 0;
                     p++;
+                    ClusterMark2++;
                 }
+                ClusterMark++;
                 HigherLevelQuantity = ClustersInIteration;
             }
 

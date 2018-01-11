@@ -158,7 +158,9 @@ namespace K_Means_Clustering
                 }
             }
 
-            b.Save(PathToGraph + ".png");
+            int r = DataSet.CountElements(@"..\..\..\");
+            r++;
+            b.Save(PathToGraph + r + ".png");
         }
 
         // Funkcja do rysowania wykresu z uwzglednieniem dziedziczenia(kolor figury) po nadrzednej iteracji
@@ -375,8 +377,9 @@ namespace K_Means_Clustering
                     }
                 }
             }
-
-            b.Save(PathToGraph + ".png");
+            int r = DataSet.CountElements(@"..\..\..\");
+            r++;
+            b.Save(PathToGraph + r + ".png");
         }
 
         // Funkcja rysowania z nieco innym przedstawieniem dziedziczenia po klastrach z iteracji nadrzednej
@@ -533,8 +536,9 @@ namespace K_Means_Clustering
                     }
                 }
             }
-
-            b.Save(PathToGraph + ".png");
+            int r = DataSet.CountElements(@"..\..\..\");
+            r++;
+            b.Save(PathToGraph + r + ".png");
         }
     }
 }
