@@ -17,7 +17,7 @@ namespace K_Means_Clustering
         // Ustawienie liczebnosci klastrow
         public static void SetQuantity()
         {
-            Console.WriteLine("How many Clusters: ");
+            Console.WriteLine("Enter quantity of Clusters in single iteration: ");
             quantityOfClusters = Convert.ToInt32(Console.ReadLine());
         }
 
