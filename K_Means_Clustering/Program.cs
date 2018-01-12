@@ -60,7 +60,7 @@ namespace K_Means_Clustering
             // Wyrzucenie na konsole wektora [] cluster oraz jego zapis do pliku
 
             //DataSet.ShowVector(cluster);
-            DataSet.SaveVectorToFile(cluster, Path + ShortName + "_vector.txt");
+            //DataSet.SaveVectorToFile(cluster, Path + ShortName + "_vector.txt");
 
 
             // Wyrzucenie na konsole podzialu na klastry po 0 iteracji oraz zapis do plikow
@@ -85,7 +85,7 @@ namespace K_Means_Clustering
             // Rysowanie wykresu z wyborem atrybutow
             Console.WriteLine();
             Console.WriteLine("Generate Graph");
-            Console.WriteLine("Choose 2 integers(dimensions) from 0 to " + (FileNameMatrix[0].Length-1-LastColumnInterpreter));
+            Console.WriteLine("Choose 2 integers(dimensions) from 0 to " + (FileNameMatrix[0].Length-1));
             Console.Write("Dimension 1: ");
             int dimension1 = Convert.ToInt32(Console.ReadLine());
             Console.Write("Dimension 2: ");

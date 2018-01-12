@@ -119,6 +119,12 @@ namespace K_Means_Clustering
 
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
+                            if (DataSet[i][j] == 0)
+                            {
+                                break;
+                            }
+                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+
                             if (StringSet != null)
                             {
                                 if (j == DataSet[i].Length - 1)
@@ -127,12 +133,6 @@ namespace K_Means_Clustering
                                     continue;
                                 }
                             }
-
-                            if (DataSet[i][j] == 0)
-                            {
-                                break;
-                            }
-                            sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
                         }
                         sw.WriteLine("");
                     }
@@ -184,14 +184,6 @@ namespace K_Means_Clustering
 
                         for (int j = 0; j < DataSet[i].Length; j++)
                         {
-                            if (StringSet!=null)
-                            {
-                                if (j == DataSet[i].Length - 1)
-                                {
-                                    sw.Write(StringSet[i].ToString() + " ");
-                                    continue;
-                                }
-                            }
 
                             if (DataSet[i][j] == 0)
                             {
@@ -199,6 +191,15 @@ namespace K_Means_Clustering
                             }
                            
                             sw.Write(DataSet[i][j].ToString("F" + 1) + " ");
+
+                            if (StringSet != null)
+                            {
+                                if (j == DataSet[i].Length-1)
+                                {
+                                    sw.Write(StringSet[i].ToString() + " ");
+                                    continue;
+                                }
+                            }
                         }
                         sw.WriteLine("");
                     }
@@ -226,8 +227,53 @@ namespace K_Means_Clustering
                 }
             }
 
+            // Zliczanie niepustych rekordow
+            int NewMatrixLength = 0;
+            for (int i = 0; i < Matrix.Length; i++)
+            {
+                for (int j = 0; j < 1; j++)
+                {
+                    if(Matrix[i][0]==0 && Matrix[i][1] == 0)
+                    {
+                       
+                    }
+                    else
+                    {
+                        NewMatrixLength++;
+                    }
+                }
+            }
+
+            // Tworzenie tablicy bez pustych rekordow
+            int z = 0;
+            double[][] MatrixResult = new double[NewMatrixLength][];
+            for (int i = 0; i < Matrix.Length; i++)
+            {
+                for (int j = 0; j < Matrix[i].Length; j++)
+                {
+                    if (Matrix[i][0] == 0 && Matrix[i][1] == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if(j==0)
+                        {
+                            MatrixResult[z] = new double[Matrix[i].Length];
+                        }
+
+                        MatrixResult[z][j] = Matrix[i][j];
+                    }
+                    if(j==Matrix[i].Length-1)
+                    {
+                        z++;
+                    }
+                }
+            }
+
+
             numerator++;
-            return Matrix;
+            return MatrixResult;
         }
 
         // Prezentacja wektora
