@@ -14,6 +14,9 @@ namespace K_Means_Clustering
             Stopwatch sw = new Stopwatch();
             Stopwatch sw2 = new Stopwatch();
 
+
+            #region Inicjalizacja
+
             // W srodku katalogu powinien znajdowac sie plik z danymi (np. iris.txt)
             // Do tego katalogu są zapisywane dodatkowe elementy jak np. wykres, czy pliki tekstowe z klastrami
             string Path = @"..\..\..\";
@@ -43,6 +46,10 @@ namespace K_Means_Clustering
             }
             //DataSet.ShowDataSet(FileNameMatrix);
 
+            #endregion
+
+            #region Clustering 1 iteracja
+
             // Ustawienie liczebnosci klastrow dla 0 iteracji
             Console.WriteLine();
             Clustering.SetQuantity();
@@ -71,7 +78,11 @@ namespace K_Means_Clustering
 
             DataSet.SaveEachClusterToFile_Basic(FileNameMatrix, stringLastParam, cluster, Clustering.quantityOfClusters, Path + ShortName);
 
-         
+            #endregion
+
+
+            #region Clustering kolejne iteracje
+
             Console.WriteLine("Enter loop execution count (cluster generation): ");
             int iterationsNumber = Convert.ToInt32(Console.ReadLine());
 
@@ -81,6 +92,11 @@ namespace K_Means_Clustering
             Clustering.LoopIteration(FileNameMatrix, stringLastParam, Matrix, iterationsNumber, Path + ShortName);
 
             sw2.Stop();
+
+            #endregion
+
+
+            #region Rysowanie wykresu dla Clusteringu
 
             // Rysowanie wykresu z wyborem atrybutow
             Console.WriteLine();
@@ -97,6 +113,17 @@ namespace K_Means_Clustering
             Console.WriteLine("End of the process ");
             Console.WriteLine("Zero iteration at time: " + sw.Elapsed);
             Console.WriteLine("Others iterations at time: " + sw2.Elapsed);
+
+            #endregion
+
+
+            #region KNN bez wykorzystania podzialu na klastry
+
+            KNN.SearchKNN(FileNameMatrix,2);
+
+            #endregion
+
+
             Console.ReadLine();
         }
     }

@@ -307,5 +307,23 @@ namespace K_Means_Clustering
         }
 
 
+        // Prezentacja wskazanej liczby elementow z 3 macierzy
+        public static void PresentQuantityOfItems(double [][] DataSet, double [] ArrayOfKeys, int [] ArrayOfItems, double QuantityOfNeighboursToPresent)
+        {
+            Console.Write($"Odleglosci: ");
+
+            for (int i = 0; i < QuantityOfNeighboursToPresent; i++)
+            {
+                Console.Write($"Odleglosc: {ArrayOfKeys[i]} /t  Indeks wiersza {ArrayOfItems[i]} /t  Wiersz: ");
+
+                for (int j = 0; j < DataSet[ArrayOfItems[i]].Length; j++)
+                {
+                    Console.Write($"{DataSet[ArrayOfItems[i]][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+
     }
 }

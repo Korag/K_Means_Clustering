@@ -46,6 +46,7 @@
     <Compile Include="Clustering.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="Drawing.cs" />
+    <Compile Include="KNN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
