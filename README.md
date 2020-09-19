@@ -10,11 +10,11 @@ Algorithm adapted to multiple clustering process - a set of data can be divided 
 
 For graphical visualization of the clustering process, an additional class has been created, which places on the axes of coordinates points located in individual clusters.
 
-![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_1.png "Chart")
+![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_1.PNG "Chart")
 
-![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_2.png "Chart")
+![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_2.PNG "Chart")
 
-![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_3.png "Chart")
+![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_3.PNG "Chart")
 
-![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_4.png "Chart")
+![alt text](https://github.com/Korag/DocumentationImages/blob/master/K_Means_Clustering/K_Means_Clustering_4.PNG "Chart")
 
