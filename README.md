@@ -1,6 +1,7 @@
 # K_Means_Clustering
 
 The program contained in this repository has been used to create the following scientific article:
+
 Kordos M., Czepielik Ł., Blachnik M. (2018) Data Set Partitioning
 in Evolutionary Instance Selection. In: Yin H., Camacho D., Novais P., Tallón-Ballesteros A. (eds) Intelligent Data Engineering and Automated Learning – IDEAL 2018. IDEAL 2018. Lecture Notes in Computer Science, vol 11314. Springer, Cham
 
